@@ -1,3 +1,4 @@
+import { getEnv } from "../../env/configs";
 import { sanitizeStr } from "./sanitize";
 
 describe("Sanitize (unit)", () => {
@@ -26,3 +27,4 @@ describe("Sanitize (unit)", () => {
     expect(sanitizeStr(str)).toBe(sanitizeStr(expectedStr));
   })
 });
+
