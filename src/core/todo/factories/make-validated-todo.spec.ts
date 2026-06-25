@@ -1,9 +1,9 @@
 // Util
-import * as sanitizeStrMod from "@/app/utils/sanitize";
+import * as sanitizeStrMod from "@/utils/sanitize";
 
 // Schema
-import * as validateTodoDescriptionMod from "../schemas/validate-todo-description";
-import { Todo } from "../schemas/todo.contract";
+import * as validateTodoDescriptionMod from "@/core/todo/schemas/validate-todo-description";
+import { Todo } from "@/core/todo/schemas/todo.contract";
 
 // Factories
 import { makeValidatedTodo } from "./make-validated-todo";
@@ -36,7 +36,7 @@ describe("makeValidatedTodo", () => {
     const res = makeValidatedTodo(description);
 
     // @ts-expect-error Testing if return the same value
-    expect(res.data).toStrictEqual(todo);
+    expect(res.todo).toStrictEqual(todo);
   });
 
   it("return errors if makeValidatedTodo was failed", () => {

@@ -1,18 +1,16 @@
 // Util
-import { sanitizeStr } from "@/app/utils/sanitize";
+import { sanitizeStr } from "@/utils/sanitize";
 
 // Schemas
-import { validateTodoDescription } from "../schemas/validate-todo-description";
-import { Todo } from "../schemas/todo.contract";
+import { validateTodoDescription } from "@/core/todo/schemas/validate-todo-description";
+import { InValidatedTodo, ValidatedTodo } from "@/core/todo/schemas/todo.contract";
 
 // Factory
 import { makeNewTodo } from "./make-new-todo";
 
-type ValidatedTodo =
-  | { success: true; data: Todo }
-  | { success: false; errors: string[] };
+type TodoValidation = ValidatedTodo | InValidatedTodo;
 
-export const makeValidatedTodo = (description: string): ValidatedTodo => {
+export const makeValidatedTodo = (description: string): TodoValidation => {
   const sanitizeDescription = sanitizeStr(description);
   const validatedDescription = validateTodoDescription(sanitizeDescription);
 
@@ -24,6 +22,6 @@ export const makeValidatedTodo = (description: string): ValidatedTodo => {
 
   return {
     success: validatedDescription.success,
-    data: makeNewTodo(sanitizeDescription),
+    todo: makeNewTodo(sanitizeDescription),
   };
 };
