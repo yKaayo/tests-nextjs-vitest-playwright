@@ -1,4 +1,3 @@
-import { getEnv } from "../../env/configs";
 import { sanitizeStr } from "./sanitize";
 
 describe("Sanitize (unit)", () => {

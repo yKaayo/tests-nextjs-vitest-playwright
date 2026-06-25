@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.8.0",
   "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "sqlite",
-  "inlineSchema": "datasource db {\n  provider = \"sqlite\"\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n",
+  "inlineSchema": "datasource db {\n  provider = \"sqlite\"\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\nmodel Todo {\n  id          String @id\n  description String\n  createdAt   String\n}\n\nmodel User {\n  id          String   @id\n  description String   @unique\n  createdAt   DateTime @default(now()) @map(\"created_at\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -32,10 +32,10 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Todo\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 config.parameterizationSchema = {
-  strings: JSON.parse("[]"),
-  graph: "AAAA"
+  strings: JSON.parse("[\"where\",\"Todo.findUnique\",\"Todo.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"Todo.findFirst\",\"Todo.findFirstOrThrow\",\"Todo.findMany\",\"data\",\"Todo.createOne\",\"Todo.createMany\",\"Todo.createManyAndReturn\",\"Todo.updateOne\",\"Todo.updateMany\",\"Todo.updateManyAndReturn\",\"create\",\"update\",\"Todo.upsertOne\",\"Todo.deleteOne\",\"Todo.deleteMany\",\"having\",\"_count\",\"_min\",\"_max\",\"Todo.groupBy\",\"Todo.aggregate\",\"User.findUnique\",\"User.findUniqueOrThrow\",\"User.findFirst\",\"User.findFirstOrThrow\",\"User.findMany\",\"User.createOne\",\"User.createMany\",\"User.createManyAndReturn\",\"User.updateOne\",\"User.updateMany\",\"User.updateManyAndReturn\",\"User.upsertOne\",\"User.deleteOne\",\"User.deleteMany\",\"User.groupBy\",\"User.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"description\",\"createdAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\"]"),
+  graph: "RxEgBioAAD8AMCsAAAQAECwAAD8AMC0BAAAAAS4BADwAIS8BADwAIQEAAAABACABAAAAAQAgBioAAD8AMCsAAAQAECwAAD8AMC0BADwAIS4BADwAIS8BADwAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACADLQEAAAABLgEAAAABLwEAAAABAQgAAAkAIAMtAQAAAAEuAQAAAAEvAQAAAAEBCAAACwAwAQgAAAsAMAMtAQBDACEuAQBDACEvAQBDACECAAAAAQAgCAAADgAgAy0BAEMAIS4BAEMAIS8BAEMAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgAxUAAEUAIBYAAEcAIBcAAEYAIAYqAAA-ADArAAAXABAsAAA-ADAtAQA0ACEuAQA0ACEvAQA0ACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAYqAAA7ADArAAAdABAsAAA7ADAtAQAAAAEuAQAAAAEvQAA9ACEBAAAAGgAgAQAAABoAIAYqAAA7ADArAAAdABAsAAA7ADAtAQA8ACEuAQA8ACEvQAA9ACEAAwAAAB0AIAMAAB4AMAQAABoAIAMAAAAdACADAAAeADAEAAAaACADAAAAHQAgAwAAHgAwBAAAGgAgAy0BAAAAAS4BAAAAAS9AAAAAAQEIAAAiACADLQEAAAABLgEAAAABL0AAAAABAQgAACQAMAEIAAAkADADLQEAQwAhLgEAQwAhL0AARAAhAgAAABoAIAgAACcAIAMtAQBDACEuAQBDACEvQABEACECAAAAHQAgCAAAKQAgAgAAAB0AIAgAACkAIAMAAAAaACAPAAAiACAQAAAnACABAAAAGgAgAQAAAB0AIAMVAABAACAWAABCACAXAABBACAGKgAAMwAwKwAAMAAQLAAAMwAwLQEANAAhLgEANAAhL0AANQAhAwAAAB0AIAMAAC8AMBQAADAAIAMAAAAdACADAAAeADAEAAAaACAGKgAAMwAwKwAAMAAQLAAAMwAwLQEANAAhLgEANAAhL0AANQAhDhUAADcAIBYAADoAIBcAADoAIDABAAAAATEBAAAABDIBAAAABDMBAAAAATQBAAAAATUBAAAAATYBAAAAATcBADkAITgBAAAAATkBAAAAAToBAAAAAQsVAAA3ACAWAAA4ACAXAAA4ACAwQAAAAAExQAAAAAQyQAAAAAQzQAAAAAE0QAAAAAE1QAAAAAE2QAAAAAE3QAA2ACELFQAANwAgFgAAOAAgFwAAOAAgMEAAAAABMUAAAAAEMkAAAAAEM0AAAAABNEAAAAABNUAAAAABNkAAAAABN0AANgAhCDACAAAAATECAAAABDICAAAABDMCAAAAATQCAAAAATUCAAAAATYCAAAAATcCADcAIQgwQAAAAAExQAAAAAQyQAAAAAQzQAAAAAE0QAAAAAE1QAAAAAE2QAAAAAE3QAA4ACEOFQAANwAgFgAAOgAgFwAAOgAgMAEAAAABMQEAAAAEMgEAAAAEMwEAAAABNAEAAAABNQEAAAABNgEAAAABNwEAOQAhOAEAAAABOQEAAAABOgEAAAABCzABAAAAATEBAAAABDIBAAAABDMBAAAAATQBAAAAATUBAAAAATYBAAAAATcBADoAITgBAAAAATkBAAAAAToBAAAAAQYqAAA7ADArAAAdABAsAAA7ADAtAQA8ACEuAQA8ACEvQAA9ACELMAEAAAABMQEAAAAEMgEAAAAEMwEAAAABNAEAAAABNQEAAAABNgEAAAABNwEAOgAhOAEAAAABOQEAAAABOgEAAAABCDBAAAAAATFAAAAABDJAAAAABDNAAAAAATRAAAAAATVAAAAAATZAAAAAATdAADgAIQYqAAA-ADArAAAXABAsAAA-ADAtAQA0ACEuAQA0ACEvAQA0ACEGKgAAPwAwKwAABAAQLAAAPwAwLQEAPAAhLgEAPAAhLwEAPAAhAAAAATsBAAAAAQE7QAAAAAEAAAAAAAAAAxUABhYABxcACAAAAAMVAAYWAAcXAAgAAAADFQAOFgAPFwAQAAAAAxUADhYADxcAEAECAQIDAQUGAQYHAQcIAQkKAQoMAgsNAwwPAQ0RAg4SBBETARIUARMVAhgYBRkZCRobChscChwfCh0gCh4hCh8jCiAlAiEmCyIoCiMqAiQrDCUsCiYtCicuAigxDSkyEQ"
 }
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
@@ -70,8 +70,8 @@ export interface PrismaClientConstructor {
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Todos
+   * const todos = await prisma.todo.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -94,8 +94,8 @@ export interface PrismaClientConstructor {
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Todos
+ * const todos = await prisma.todo.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -188,7 +188,25 @@ export interface PrismaClient<
     extArgs: ExtArgs
   }>>
 
-    
+      /**
+   * `prisma.todo`: Exposes CRUD operations for the **Todo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Todos
+    * const todos = await prisma.todo.findMany()
+    * ```
+    */
+  get todo(): Prisma.TodoDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
