@@ -1,13 +1,14 @@
-import { InValidatedTodo, Todo, ValidatedTodo } from "../schemas/todo.contract";
-
-export interface FindFirstTodoParams {
-  id: string;
-  description?: string;
-}
+import {
+  InValidatedTodo,
+  NewTodo,
+  Todo,
+  ValidatedTodo,
+} from "../schemas/todo.contract";
 
 export interface TodoRepository {
-  findFirst(params: FindFirstTodoParams): Promise<Todo | null>;
-  create(todo: Todo): Promise<ValidatedTodo | InValidatedTodo>;
+  findFirstById(id: string): Promise<Todo | null>;
+  findFirstByDescription(description: string): Promise<Todo | null>;
+  create(todo: NewTodo): Promise<ValidatedTodo | InValidatedTodo>;
   findAll(): Promise<Todo[]>;
   delete(id: string): Promise<ValidatedTodo | InValidatedTodo>;
 }

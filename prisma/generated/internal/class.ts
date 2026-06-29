@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.8.0",
   "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "sqlite",
-  "inlineSchema": "datasource db {\n  provider = \"sqlite\"\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\nmodel Todo {\n  id          String @id\n  description String\n  createdAt   String\n}\n\nmodel User {\n  id          String   @id\n  description String   @unique\n  createdAt   DateTime @default(now()) @map(\"created_at\")\n}\n",
+  "inlineSchema": "datasource db {\n  provider = \"sqlite\"\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\n// Models\nmodel Todo {\n  id          String @id\n  description String\n  createdAt   String\n}\n\nmodel User {\n  id          String   @id\n  description String   @unique\n  createdAt   DateTime @default(now()) @map(\"created_at\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
