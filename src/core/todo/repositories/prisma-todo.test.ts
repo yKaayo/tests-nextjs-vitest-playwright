@@ -1,7 +1,7 @@
 import { makeTestTodoRepository } from "@/core/__tests__/make-test-todo-respository";
+import { InValidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
 
-const { repository, deleteAllTodos, exampleTodos } =
-  makeTestTodoRepository();
+const { repository, deleteAllTodos, exampleTodos } = makeTestTodoRepository();
 
 describe("prismaTodoRepository (integration)", () => {
   beforeEach(() => {
@@ -17,11 +17,9 @@ describe("prismaTodoRepository (integration)", () => {
 
     test("should return the first to-do item when exist with the same properties", async () => {
       const descriptionTodo = exampleTodos(1)[0];
-      const newTodo = await repository.create(descriptionTodo);
-
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
+      const newTodo = (await repository.create(
+        descriptionTodo,
+      )) as ValidatedTodo;
 
       const { id, description, createdAt } = newTodo.todo;
 
@@ -44,11 +42,9 @@ describe("prismaTodoRepository (integration)", () => {
 
     test("should return the first to-do item when exist with the same properties", async () => {
       const descriptionTodo = exampleTodos(1)[0];
-      const newTodo = await repository.create(descriptionTodo);
-
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
+      const newTodo = (await repository.create(
+        descriptionTodo,
+      )) as ValidatedTodo;
 
       const { id, description, createdAt } = newTodo.todo;
 
@@ -74,13 +70,9 @@ describe("prismaTodoRepository (integration)", () => {
       const todos = [];
 
       for (const descriptionTodo of descriptionsTodo) {
-        const todoData = await repository.create(descriptionTodo);
-
-        if (!todoData.success) {
-          throw new Error(
-            `Error to create todo: ${todoData.errors.join(", ")}`,
-          );
-        }
+        const todoData = (await repository.create(
+          descriptionTodo,
+        )) as ValidatedTodo;
 
         const { todo } = todoData;
         todos.push(todo);
@@ -94,17 +86,15 @@ describe("prismaTodoRepository (integration)", () => {
   describe("create", async () => {
     test("should create a new to-do item", async () => {
       const description = exampleTodos(1)[0];
-      const newTodo = await repository.create(description);
-
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
+      const newTodo = (await repository.create(description)) as ValidatedTodo;
 
       expect(newTodo).toStrictEqual({
         success: true,
-        todo: expect.objectContaining({
-          description: newTodo.todo.description,
-        }),
+        todo: {
+          createdAt: expect.any(String),
+          description: description.description,
+          id: expect.any(String),
+        },
       });
 
       // Verify that the repository was created with the new todo
@@ -114,17 +104,14 @@ describe("prismaTodoRepository (integration)", () => {
 
     test("should fail to create a new to-do item if the description already exists", async () => {
       const description = exampleTodos(1)[0];
-      const newTodo = await repository.create(description);
+      const newTodo = (await repository.create(description)) as ValidatedTodo;
 
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
+      const sameTodo = (await repository.create(
+        description,
+      )) as InValidatedTodo;
 
-      const sameTodo = await repository.create(description);
-      expect(sameTodo).toStrictEqual({
-        success: false,
-        errors: ["Já existe esse todo!"],
-      });
+      expect(sameTodo.success).toStrictEqual(false);
+      expect(sameTodo.errors).toStrictEqual(["Já existe esse todo!"]);
 
       // Verify that the repository still contains only the first created todo
       const allTodos = await repository.findAll();
@@ -135,11 +122,7 @@ describe("prismaTodoRepository (integration)", () => {
   describe("delete", () => {
     test("should delete a to-do item if it exists", async () => {
       const description = exampleTodos(1)[0];
-      const newTodo = await repository.create(description);
-
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
+      const newTodo = (await repository.create(description)) as ValidatedTodo;
 
       const result = await repository.delete(newTodo.todo.id);
       expect(result).toStrictEqual({
@@ -154,17 +137,11 @@ describe("prismaTodoRepository (integration)", () => {
 
     test("should fail if do not find the todo id", async () => {
       const description = exampleTodos(1)[0];
-      const newTodo = await repository.create(description);
+      const newTodo = (await repository.create(description)) as ValidatedTodo;
 
-      if (!newTodo.success) {
-        throw new Error(`Error to create todo: ${newTodo.errors.join(", ")}`);
-      }
-
-      const result = await repository.delete("any id");
-      expect(result).toStrictEqual({
-        success: false,
-        errors: ["Todo não encontrado!"],
-      });
+      const result = (await repository.delete("any id")) as InValidatedTodo;
+      expect(result.success).toStrictEqual(false);
+      expect(result.errors).toStrictEqual(["Todo não encontrado!"]);
 
       // Verify that the repository still contains only the first created todo
       const allTodos = await repository.findAll();

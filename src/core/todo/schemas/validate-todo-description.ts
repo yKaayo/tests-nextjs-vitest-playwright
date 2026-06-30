@@ -4,7 +4,7 @@ type ValidateTodoDescription = {
 };
 
 export const validateTodoDescription = (
-  description: string
+  description: string,
 ): ValidateTodoDescription => {
   const errors = [];
 
