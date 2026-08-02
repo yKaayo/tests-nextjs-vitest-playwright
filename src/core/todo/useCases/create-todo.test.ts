@@ -1,6 +1,6 @@
 import { makeTestTodoRepository } from "@/core/__tests__/make-test-todo-respository";
+import { InvalidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
 import { createTodoUseCase } from "./create-todo";
-import { InValidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
 
 const { deleteAllTodos } = makeTestTodoRepository();
 
@@ -10,7 +10,7 @@ describe("createTodoUseCase (integration)", () => {
   });
 
   test("should fail when description is empty", async () => {
-    const invalidTodo = (await createTodoUseCase("")) as InValidatedTodo;
+    const invalidTodo = (await createTodoUseCase("")) as InvalidatedTodo;
 
     expect(invalidTodo.success).toBe(false);
     expect(invalidTodo.errors).toStrictEqual([
@@ -19,7 +19,7 @@ describe("createTodoUseCase (integration)", () => {
   });
 
   test("should fail when description has less than 3 characters", async () => {
-    const invalidTodo = (await createTodoUseCase("12")) as InValidatedTodo;
+    const invalidTodo = (await createTodoUseCase("12")) as InvalidatedTodo;
 
     expect(invalidTodo.success).toBe(false);
     expect(invalidTodo.errors).toStrictEqual([
@@ -44,7 +44,7 @@ describe("createTodoUseCase (integration)", () => {
     await createTodoUseCase("any description");
     const invalidTodo = (await createTodoUseCase(
       "any description",
-    )) as InValidatedTodo;
+    )) as InvalidatedTodo;
 
     expect(invalidTodo.success).toBe(false);
     expect(invalidTodo.errors).toStrictEqual(["Já existe esse todo!"]);

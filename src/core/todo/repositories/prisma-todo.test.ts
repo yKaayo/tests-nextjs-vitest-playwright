@@ -1,5 +1,5 @@
 import { makeTestTodoRepository } from "@/core/__tests__/make-test-todo-respository";
-import { InValidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
+import { InvalidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
 
 const { repository, deleteAllTodos, exampleTodos } = makeTestTodoRepository();
 
@@ -108,7 +108,7 @@ describe("prismaTodoRepository (integration)", () => {
 
       const sameTodo = (await repository.create(
         description,
-      )) as InValidatedTodo;
+      )) as InvalidatedTodo;
 
       expect(sameTodo.success).toStrictEqual(false);
       expect(sameTodo.errors).toStrictEqual(["Já existe esse todo!"]);
@@ -139,7 +139,7 @@ describe("prismaTodoRepository (integration)", () => {
       const description = exampleTodos(1)[0];
       const newTodo = (await repository.create(description)) as ValidatedTodo;
 
-      const result = (await repository.delete("any id")) as InValidatedTodo;
+      const result = (await repository.delete("any id")) as InvalidatedTodo;
       expect(result.success).toStrictEqual(false);
       expect(result.errors).toStrictEqual(["Todo não encontrado!"]);
 

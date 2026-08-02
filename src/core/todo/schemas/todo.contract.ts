@@ -11,7 +11,7 @@ export type ValidatedTodo = {
   todo: Todo;
 };
 
-export type InValidatedTodo = {
+export type InvalidatedTodo = {
   success: false;
   errors: string[];
 };

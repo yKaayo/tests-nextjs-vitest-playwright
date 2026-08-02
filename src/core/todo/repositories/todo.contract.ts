@@ -1,5 +1,5 @@
 import {
-  InValidatedTodo,
+  InvalidatedTodo,
   NewTodo,
   Todo,
   ValidatedTodo,
@@ -8,7 +8,7 @@ import {
 export interface TodoRepository {
   findFirstById(id: string): Promise<Todo | null>;
   findFirstByDescription(description: string): Promise<Todo | null>;
-  create(todo: NewTodo): Promise<ValidatedTodo | InValidatedTodo>;
+  create(todo: NewTodo): Promise<ValidatedTodo | InvalidatedTodo>;
   findAll(): Promise<Todo[]>;
-  delete(id: string): Promise<ValidatedTodo | InValidatedTodo>;
+  delete(id: string): Promise<ValidatedTodo | InvalidatedTodo>;
 }

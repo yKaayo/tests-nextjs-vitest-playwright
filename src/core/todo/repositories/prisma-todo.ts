@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import {
-  InValidatedTodo,
+  InvalidatedTodo,
   NewTodo,
   Todo,
   ValidatedTodo,
@@ -36,7 +36,7 @@ export class PrismaTodoRepository implements TodoRepository {
     });
   }
 
-  async create(todo: NewTodo): Promise<ValidatedTodo | InValidatedTodo> {
+  async create(todo: NewTodo): Promise<ValidatedTodo | InvalidatedTodo> {
     const existingTodo = await this.findFirstByDescription(todo.description);
 
     if (existingTodo) {
@@ -60,7 +60,7 @@ export class PrismaTodoRepository implements TodoRepository {
     };
   }
 
-  async delete(id: string): Promise<ValidatedTodo | InValidatedTodo> {
+  async delete(id: string): Promise<ValidatedTodo | InvalidatedTodo> {
     const existingTodo = await this.findFirstById(id);
 
     if (!existingTodo) {

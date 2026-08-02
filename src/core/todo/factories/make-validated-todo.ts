@@ -2,13 +2,16 @@
 import { sanitizeStr } from "@/utils/sanitize";
 
 // Schemas
+import {
+  InvalidatedTodo,
+  ValidatedTodo,
+} from "@/core/todo/schemas/todo.contract";
 import { validateTodoDescription } from "@/core/todo/schemas/validate-todo-description";
-import { InValidatedTodo, ValidatedTodo } from "@/core/todo/schemas/todo.contract";
 
 // Factory
 import { makeNewTodo } from "./make-new-todo";
 
-type TodoValidation = ValidatedTodo | InValidatedTodo;
+type TodoValidation = ValidatedTodo | InvalidatedTodo;
 
 export const makeValidatedTodo = (description: string): TodoValidation => {
   const sanitizeDescription = sanitizeStr(description);
