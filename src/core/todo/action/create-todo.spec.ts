@@ -1,7 +1,5 @@
-import { revalidatePath } from "next/cache";
-import { InvalidatedTodo, ValidatedTodo } from "../schemas/todo.contract";
-import * as createTodoUseCaseMod from "../useCases/create-todo";
 import { createTodoAction } from "./create-todo";
+import { makeMocks } from "@/core/__tests__/make-test-action-mocks";
 
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
@@ -41,34 +39,4 @@ describe("createTodoUseCase (unit)", async () => {
   });
 });
 
-const makeMocks = () => {
-  const description = "description";
 
-  const successResult: ValidatedTodo = {
-    success: true,
-    todo: {
-      createdAt: "any date",
-      description: "any description",
-      id: "any id",
-    },
-  };
-
-  const errorResult: InvalidatedTodo = {
-    success: false,
-    errors: ["any error"],
-  };
-
-  const createTodoUseCaseSpy = vi
-    .spyOn(createTodoUseCaseMod, "createTodoUseCase")
-    .mockResolvedValue(successResult);
-
-  const revalidatePathMock = vi.mocked(revalidatePath);
-
-  return {
-    description,
-    successResult,
-    errorResult,
-    createTodoUseCaseSpy,
-    revalidatePathMock,
-  };
-};

@@ -1,5 +1,4 @@
 import { PrismaTodoRepository } from "../todo/repositories/prisma-todo";
-import { Todo } from "../todo/schemas/todo.contract";
 import { prisma } from "@/lib/prisma";
 
 export const makeTestTodoRepository = () => {
